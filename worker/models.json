@@ -1,0 +1,121 @@
+{
+  "v2": {
+    "label": "Depth-Anything-V2-Small",
+    "family": "v2",
+    "role": "depth",
+    "nearIsHigh": true,
+    "url": "onnx-community/depth-anything-v2-small/resolve/f7421df/onnx/model.onnx",
+    "downloadSize": "99.1 MB",
+    "sha256": "afb6a5c28f3b6bf1618c6e43f02073ef9dfdc70e937502d51603e57b0a1df10c"
+  },
+  "v2-base": {
+    "label": "Depth-Anything-V2-Base",
+    "family": "v2",
+    "role": "depth",
+    "nearIsHigh": true,
+    "url": "onnx-community/depth-anything-v2-base/resolve/bbfd1e8/onnx/model.onnx",
+    "downloadSize": "389 MB",
+    "sha256": "dab40f67d5ead5e0ed52acfae41a717a708b02bc57f6cb761c5de828f26a7289"
+  },
+  "v2-large": {
+    "label": "Depth-Anything-V2-Large",
+    "family": "v2",
+    "role": "depth",
+    "nearIsHigh": true,
+    "url": "onnx-community/depth-anything-v2-large/resolve/0306443/onnx/model.onnx",
+    "downloadSize": "1.34 GB",
+    "sha256": "a93aa89b5e92e30e0afbe0f7c3ec692b35cfca791ae9004a190fb0ca2010e905"
+  },
+  "v3": {
+    "label": "DA3-SMALL",
+    "family": "v3",
+    "role": "depth",
+    "nearIsHigh": false,
+    "url": "zerochocobo/DepthAnything3_ONNX/resolve/42d5516/da3_small.onnx",
+    "downloadSize": "101 MB",
+    "sha256": "d659ca25f1c665d5c064a64294d5fd0303e456aa94bf224a7777d9682cac7a39"
+  },
+  "v3-base": {
+    "label": "DA3-BASE",
+    "family": "v3",
+    "role": "depth",
+    "nearIsHigh": false,
+    "url": "zerochocobo/DepthAnything3_ONNX/resolve/42d5516/da3_base.onnx",
+    "downloadSize": "394 MB",
+    "sha256": "a2230abae51a8a07e52196e8fedc923bdd29630e9b3cc80f085964000ed573fa"
+  },
+  "v3-mono-large": {
+    "label": "DA3MONO-LARGE",
+    "family": "v3",
+    "role": "depth",
+    "nearIsHigh": true,
+    "url": "Jens-Duttke/Depth-Anything-3-MONO-ONNX/resolve/c1785dbd13d3eaa00f18a7dc41a972f5315a5016/da-v3-mono-large_fp16_opset21_optimized.onnx",
+    "downloadSize": "688 MB",
+    "sha256": "0ef8f62e153f883237a3c2090f5530ca125d295ef8c1bfcaf5b3826f145bc415"
+  },
+  "mask-rcnn-compact": {
+    "label": "Mask R-CNN Compact",
+    "role": "segmentation",
+    "url": "onnxmodelzoo/MaskRCNN-12-qdq/resolve/a94abcdbdc1550d29340a74699de33fc60dd1d4e/MaskRCNN-12-qdq.onnx",
+    "downloadSize": "45.7 MB",
+    "sha256": "d6fe3a9f49c3009d745b388c09c06ec3b332d942ba456053411a1f1bff22af9c"
+  },
+  "mask-rcnn": {
+    "label": "Mask R-CNN Full",
+    "role": "segmentation",
+    "url": "onnxmodelzoo/MaskRCNN-12/resolve/2447510ef23e65eabd5fa642cf59dd9e622586c5/MaskRCNN-12.onnx",
+    "downloadSize": "178 MB",
+    "sha256": "5bf940c124d9117f6fae350c4e0d46df180cbb01981832b35fdbed148078b946"
+  },
+  "mobile-sam": {
+    "label": "MobileSAM (Click Selection)",
+    "role": "prompt",
+    "url": "Acly/MobileSAM/resolve/b5e8e2f/mobile_sam_image_encoder.onnx",
+    "downloadSize": "44.7 MB",
+    "bytes": 28157093,
+    "sha256": "580f5fb648ea1062c0aabc26217aed56921985f03f0cbbd852bba81d760cc749",
+    "companion": {
+      "url": "Acly/MobileSAM/resolve/b5e8e2f/sam_mask_decoder_single.onnx",
+      "bytes": 16501323,
+      "sha256": "93915fc7c993ab9d59ab8c9ccd3bce37f7509c81ab4150a74abd4d2abbd8570d"
+    }
+  },
+  "hq-sam-2": {
+    "label": "HQ-SAM 2 (Precise Selection)",
+    "role": "prompt",
+    "url": "latolukasz/sam2.1-hiera-large-onnx/resolve/ccbb4af967bbb9dcf2c40472f6d97c930e35910a/encoder.onnx",
+    "downloadSize": "870 MB",
+    "bytes": 852451097,
+    "sha256": "f18538735868c076b715d5abbdf1a9d5fb4b0939c00be9db42d6b3808cdd3251",
+    "companion": {
+      "url": "latolukasz/sam2.1-hq-hiera-large-onnx/resolve/5d5e61bc0f0b61247e2cf9839872d2920a000727/decoder_hq.onnx",
+      "bytes": 17238498,
+      "sha256": "4cace48837e9923863d7ee21f775c60b35b49ac3a2eb2afb6cb68aa6ae8ff7f9"
+    }
+  },
+  "yolo26x-seg": {
+    "label": "YOLO26x-seg",
+    "role": "segmentation",
+    "selection": true,
+    "architecture": "yolo26-seg",
+    "url": "unileon-robotics/YOLO26-ONNX/resolve/e046fc5125ee6b579f1801f0b6df68a60b949c42/yolo26x-seg.onnx",
+    "downloadSize": "252 MB",
+    "bytes": 251623808,
+    "sha256": "c815dd6377a436a3c453c435a8da6b88c5136135148304750aa9d8c2300eb25d"
+  },
+  "lama": {
+    "label": "LaMa background fill",
+    "role": "fill",
+    "url": "opencv/inpainting_lama/resolve/c47be27/inpainting_lama_2025jan.onnx",
+    "downloadSize": "92.6 MB",
+    "sha256": "7df918ac3921d3daf0aae1d219776cf0dc4e4935f035af81841b40adcf74fdf2"
+  },
+  "mat": {
+    "label": "MAT Places512 (Noncommercial)",
+    "role": "fill",
+    "extension": ".safetensors",
+    "url": "Acly/MAT/resolve/f8cc47fcbff3624a12ab408ff7852ae70d63b8d9/MAT_Places512_G_fp16.safetensors",
+    "downloadSize": "125 MB",
+    "sha256": "309dd6ce6e04034dc4b6b15c7bd2a4844d158e03eb2a139e0eca6b366e40c0de"
+  }
+}

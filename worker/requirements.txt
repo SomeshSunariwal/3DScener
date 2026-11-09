@@ -1,0 +1,4 @@
+numpy>=1.26,<3
+Pillow>=11,<13
+onnxruntime-directml==1.24.4
+onnx>=1.17,<2

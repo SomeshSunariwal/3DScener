@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>3DScener</title>
+  <link rel="stylesheet" href="panel.css">
+</head>
+<body>
+  <header class="bar">
+    <div class="identity">
+      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+        <path class="plane-back" d="m16 13 12 6-12 6-12-6Z"/>
+        <path class="plane-mid" d="m16 8 12 6-12 6-12-6Z"/>
+        <path class="plane-front" d="m16 3 12 6-12 6-12-6Z"/>
+      </svg>
+      <h1>3DScener</h1><span class="beta">Beta</span>
+    </div>
+    <div class="header-actions">
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Light theme" aria-pressed="false" title="Switch to light theme">
+        <span class="theme-sun"><svg class="glyph" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg></span>
+        <span class="theme-moon"><svg class="glyph" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14a8.5 8.5 0 0 1-10.5-10.5A8.5 8.5 0 1 0 20.5 14Z"/></svg></span>
+      </button>
+      <button id="menu" class="menu" aria-haspopup="dialog">
+        <svg class="glyph" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 17h16M9 4v6m6 4v6"/></svg>
+        <span>Model Setup</span>
+      </button>
+    </div>
+  </header>
+  <main>
+    <section class="source-panel" aria-labelledby="source-title">
+      <div class="section-head">
+        <h2 id="source-title">Source image</h2>
+        <span class="source-type">Still image</span>
+      </div>
+      <div class="image-viewport">
+        <button id="drop" class="drop" type="button" aria-label="Browse for an image" disabled>
+          <span id="drop-prompt" class="drop-prompt">
+            <svg class="viewport-art" viewBox="0 0 160 90" aria-hidden="true">
+              <path class="viewport-plane" d="m26 65 54-29 54 29-54 21Z"/>
+              <path class="viewport-grid" d="m39 58 53 23m-40-30 53 25m-40-32 54 27m1-13L67 81m40-30L54 76m40-32L41 71M80 36v50"/>
+              <rect class="viewport-frame" x="51" y="9" width="58" height="42" rx="5"/>
+              <path class="viewport-mountain" d="m52 43 15-14 13 11 8-8 20 15"/>
+              <circle class="viewport-sun" cx="91" cy="21" r="4"/>
+            </svg>
+            <strong>Drop a photo here</strong>
+            <span class="browse-label">Browse files</span>
+            <small id="preview-state" aria-live="polite">JPEG, PNG, WebP, BMP, GIF, TIFF and more</small>
+          </span>
+          <span id="image-preview" class="image-preview" hidden>
+            <span id="image-content" class="image-content">
+              <img id="thumbnail" alt="" draggable="false">
+              <svg id="selection-mask" class="selection-mask" aria-hidden="true" hidden>
+                <defs>
+                  <filter id="selection-boundary" primitiveUnits="userSpaceOnUse">
+                    <!-- Threshold the translucent preview before tracing its boundary. -->
+                    <feComponentTransfer in="SourceAlpha" result="mask">
+                      <feFuncA type="discrete" tableValues="0 0 1 1 1 1 1 1 1"/>
+                    </feComponentTransfer>
+                    <feMorphology in="mask" operator="erode" radius="2" result="interior"/>
+                    <feComposite in="mask" in2="interior" operator="out" result="edge"/>
+                    <feFlood flood-color="#ff3535" result="red"/>
+                    <feComposite in="red" in2="edge" operator="in" result="outline"/>
+                    <feMerge>
+                      <feMergeNode in="SourceGraphic"/>
+                      <feMergeNode in="outline"/>
+                    </feMerge>
+                  </filter>
+                </defs>
+                <image width="100%" height="100%" preserveAspectRatio="none" filter="url(#selection-boundary)"/>
+              </svg>
+              <svg id="selection-trace" class="selection-trace" viewBox="0 0 1 1" preserveAspectRatio="none" aria-hidden="true" hidden>
+                <polygon vector-effect="non-scaling-stroke"/>
+              </svg>
+            </span>
+          </span>
+        </button>
+        <div id="selection-actions" class="selection-actions" role="group" aria-label="Object selection tools" hidden>
+          <button id="select-object" type="button" aria-pressed="false">Select Object</button>
+          <button id="add-selection" type="button" aria-pressed="false">Add</button>
+          <button id="remove-selection" type="button" aria-pressed="false">Remove</button>
+          <button id="save-object" type="button">Add to List</button>
+          <button id="discard-selection" type="button" hidden>Discard Mask</button>
+          <button id="auto-objects" type="button">Auto Only</button>
+          <button id="stop-processing" type="button" disabled>Stop Processing</button>
+        </div>
+      </div>
+      <input id="image-picker" type="file" hidden>
+      <div id="file" class="file" hidden>
+        <svg class="glyph" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="m3 16 5-5 5 5 2-2 6 5"/></svg>
+        <span id="filename"></span>
+        <button id="replace" type="button">Replace</button>
+      </div>
+      <section id="object-selection" aria-labelledby="object-selection-title" hidden>
+        <h3 id="object-selection-title">Object selection</h3>
+        <p id="selection-status" class="hint" role="status"></p>
+        <ol id="selected-objects"></ol>
+      </section>
+    </section>
+    <section class="inspector" aria-labelledby="depth-title">
+      <div class="section-head">
+        <h2 id="depth-title">Scene models</h2><span class="local">On device</span>
+      </div>
+      <div class="field">
+        <span class="field-label" id="selection-model-label">Selection Model</span>
+        <small id="selection-model-hint">Used for Select Object, Add, and Remove.</small>
+      </div>
+      <div class="field">
+        <span class="field-label" id="segmentation-model-label">Object Segmentation Model</span>
+        <small>Detects objects in areas you leave unselected.</small>
+      </div>
+      <div class="field">
+        <span class="field-label" id="model-label">Depth Generation Model</span>
+      </div>
+      <div class="field">
+        <span class="field-label" id="fill-model-label">Fill Space Model</span>
+      </div>
+      <div class="actions">
+        <button id="process" class="primary" disabled>
+          <svg class="glyph" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5Zm-9 9 9 5 9-5m-18 4 9 5 9-5"/></svg>
+          <span id="process-label">Process Image</span>
+        </button>
+        <button id="create" disabled>Create AE Layer</button>
+      </div>
+      <p class="hint">Builds a composition with editable 3D layers and a camera.</p>
+    </section>
+  </main>
+  <section id="python-log" class="log-panel" aria-labelledby="log-title" hidden>
+    <h2 id="log-title">Python log</h2>
+    <pre id="log-output" tabindex="0" aria-label="Python activity">Python activity will appear here when you run a task.</pre>
+  </section>
+  <footer>
+    <div class="panel-status" role="status"><span id="indicator" class="dot"></span><span id="status">Choose an image to get started.</span></div>
+    <button id="open-log" class="icon log-toggle" type="button" aria-label="Python log" title="Show Python log" aria-controls="python-log" aria-expanded="false">
+      <svg class="glyph" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="m7 9 3 3-3 3m6 0h4"/></svg>
+    </button>
+  </footer>
+  <dialog id="setup" aria-labelledby="setup-title">
+    <div class="setup-head">
+      <h2 id="setup-title">Model Setup</h2>
+      <button id="close" class="icon" aria-label="Close Model Setup">×</button>
+    </div>
+    <p class="hint">Download each component once. Scene generation runs offline.</p>
+    <div class="check">
+      <div>
+        <strong>Python</strong>
+        <small id="python-state"></small>
+      </div>
+      <button id="python-action">Locate Python</button>
+      <span id="python-ready" class="ready-icon" aria-hidden="true" hidden>✓</span>
+    </div>
+    <div class="check">
+      <div><strong>Local runtime</strong><small id="runtime-state"></small></div>
+      <button id="runtime-action">Install runtime</button>
+      <span id="runtime-ready" class="ready-icon" aria-hidden="true" hidden>✓</span>
+    </div>
+    <div id="model-sections"></div>
+    <template id="model-section-template">
+      <section class="model-download">
+        <h3 class="field-label"></h3>
+        <small class="model-state"></small>
+        <button class="primary download-model" type="button" disabled>Download</button>
+        <button class="delete-model" type="button" hidden>Delete model</button>
+        <progress max="100" aria-label="Model download progress" hidden></progress>
+        <small class="model-message" role="status"></small>
+      </section>
+    </template>
+    <p id="setup-status" class="hint" role="status"></p>
+    <button id="recheck">Check again</button>
+  </dialog>
+  <template id="model-picker-template">
+    <div class="model-picker">
+      <button class="model-choice model-trigger" type="button" aria-expanded="false" disabled>
+        <span class="model-name"></span>
+        <span class="model-meta"></span>
+      </button>
+      <div class="model-list" role="group" hidden></div>
+    </div>
+  </template>
+  <script src="local-runtime.js"></script>
+  <script src="panel.js"></script>
+</body>
+</html>
